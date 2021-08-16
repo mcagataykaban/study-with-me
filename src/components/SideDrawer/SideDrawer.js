@@ -9,7 +9,6 @@ import i18n from '../../i18n';
 
 const SideDrawer = ({ setIsOpenDrawer, ...rest }) => {
   const { t, i18 } = useTranslation();
-  console.log(i18n.language)
   return (
     <>
       <StyledBackdrop

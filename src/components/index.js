@@ -5,3 +5,4 @@ export * from './FlexBox';
 export * from './HamburgerButton';
 export * from './SideDrawer';
 export * from './ContentArea';
+export * from './Breadcrumb';
