@@ -1,10 +1,10 @@
 import React from "react";
 import { StyledDiv, StyledBackdrop, MenuItem } from "./styles";
-import { FlexBox, Button } from "../";
+import { FlexBox, Button } from "../..";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { changeLang } from "../../helpers/changeLang";
-import i18n from '../../i18n';
+import { changeLang } from "../../../helpers/changeLang";
+import i18n from '../../../i18n';
 
 
 const SideDrawer = ({ setIsOpenDrawer, ...rest }) => {

@@ -1,16 +1,28 @@
 import React, { useState } from "react";
-import { Nav, MenuItem, Wrapper } from "./styles";
-import { FlexBox, Button, HamburgerButton, SideDrawer, Breadcrumb } from "../";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { changeLang } from "../../helpers/changeLang";
-import i18n from "../../i18n";
+import useModal from "../../../hooks/useModal";
+import i18n from "../../../i18n";
+import { changeLang } from "../../../helpers/changeLang";
+import { Nav, MenuItem, Wrapper } from "./styles";
+import {
+  Modal,
+  FlexBox,
+  Button,
+  HamburgerButton,
+  SideDrawer,
+  Breadcrumb,
+} from "../..";
 
 const Navbar = ({ logo, breadCrumbText }) => {
   const { t, i18 } = useTranslation();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const { isModalVisible, showModal, handleOk, handleCancel } = useModal();
   return (
     <>
+      <Modal handleCancel={handleCancel} visible={isModalVisible}>
+        sad
+      </Modal>
       <SideDrawer
         isOpenDrawer={isOpenDrawer}
         setIsOpenDrawer={setIsOpenDrawer}
@@ -24,7 +36,6 @@ const Navbar = ({ logo, breadCrumbText }) => {
         <HamburgerButton
           onClick={() => {
             setIsOpenDrawer(!isOpenDrawer);
-            console.log(isOpenDrawer);
           }}
         />
         <Wrapper>
@@ -49,7 +60,7 @@ const Navbar = ({ logo, breadCrumbText }) => {
             <Link to="/Contact">
               <MenuItem>{t("contact")}</MenuItem>
             </Link>
-            <Button>{t("login")}</Button>
+            <Button onClick={showModal}>{t("login")}</Button>
           </FlexBox>
         </Wrapper>
       </Nav>
