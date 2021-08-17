@@ -4,6 +4,8 @@
 npm install -g win-node-env
 -npm run serve
 
+-for development server npm run dev
+
 styling -> styled-components
 popover -> react-tiny-popover
 icons > fontawesome
