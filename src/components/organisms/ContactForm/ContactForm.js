@@ -6,9 +6,7 @@ import { useAuth } from "../../../context/authContext";
 import { countryList } from "../../../__mockdata__/countryList";
 
 const ContactForm = () => {
-    useEffect(() => {
-        
-    }, [userInfo])
+  useEffect(() => {}, [userInfo]);
   const { t, i18 } = useTranslation();
   const { login, userInfo, setUserInfo, loggedIn } = useAuth();
   const [form, setForm] = useState({
@@ -62,6 +60,7 @@ const ContactForm = () => {
           <StyledInnerDiv>
             <StyledDiv>{t("name")}</StyledDiv>
             <input
+              disabled={loggedIn}
               required
               defaultValue={loggedIn ? userInfo?.name : ""}
               onChange={nameHandler}
@@ -71,6 +70,7 @@ const ContactForm = () => {
           <StyledInnerDiv>
             <StyledDiv>{t("email")}</StyledDiv>
             <StyledInput
+              disabled={loggedIn}
               required
               valid={isEmailValid}
               defaultValue={loggedIn ? userInfo?.email : ""}
