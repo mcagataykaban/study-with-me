@@ -1,10 +1,10 @@
 import React from 'react';
-import { ContentArea } from '../../components'
+import { ContentArea, ContactForm } from '../../components'
 
 const Contact = () => {
     return (
         <ContentArea>
-            Contact
+            <ContactForm />
         </ContentArea>
     )
 }

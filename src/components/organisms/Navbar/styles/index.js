@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors } from "../../../../styles/theme";
 
 export const Nav = styled.div`
   display: flex;
@@ -27,6 +28,11 @@ export const Wrapper = styled.div`
       display: none;
     }
 
+`
+
+export const NameArea = styled.div`
+    border: 1px solid ${colors.primary};
+    padding: 5px;
 `
 
 

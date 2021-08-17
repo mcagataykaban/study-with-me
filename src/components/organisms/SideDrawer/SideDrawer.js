@@ -1,14 +1,20 @@
 import React from "react";
 import { StyledDiv, StyledBackdrop, MenuItem } from "./styles";
-import { FlexBox, Button } from "../..";
+import { FlexBox, Button, LocaleSelector } from "../..";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { changeLang } from "../../../helpers/changeLang";
-import i18n from '../../../i18n';
+import i18n from "../../../i18n";
+import { useAuth } from "../../../context/authContext";
 
-
-const SideDrawer = ({ setIsOpenDrawer, ...rest }) => {
+const SideDrawer = ({ setIsOpenDrawer, showModal, ...rest }) => {
   const { t, i18 } = useTranslation();
+  const { loggedIn, userInfo, logout } = useAuth();
+  const loginHandler = () => {
+    showModal();
+    setIsOpenDrawer(false);
+  };
+
   return (
     <>
       <StyledBackdrop
@@ -19,7 +25,15 @@ const SideDrawer = ({ setIsOpenDrawer, ...rest }) => {
       />
       <StyledDiv {...rest}>
         <FlexBox style={{ marginTop: 20, marginBottom: 20 }}>
-          <Button>{t("login")}</Button>
+          {!loggedIn ? (
+            <Button onClick={loginHandler}>{t("login")}</Button>
+          ) : (
+            <FlexBox style={{flexDirection: 'column'}}>
+              <div>{userInfo?.name}</div>
+              <div>{userInfo?.email}</div>
+              <Button onClick={logout}>{t("logout")}</Button>
+            </FlexBox>
+          )}
         </FlexBox>
         <Link to="/">
           <MenuItem
@@ -40,10 +54,7 @@ const SideDrawer = ({ setIsOpenDrawer, ...rest }) => {
           </MenuItem>
         </Link>
 
-        <FlexBox style={{ marginTop: 20 }}>
-          <Button selected={i18n.language === 'tr' ? true : false} onClick={changeLang("tr")}>TR</Button>
-          <Button selected={i18n.language === 'en' ? true : false} onClick={changeLang("en")}>EN</Button>
-        </FlexBox>
+        <LocaleSelector />
       </StyledDiv>
     </>
   );

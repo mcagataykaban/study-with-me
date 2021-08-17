@@ -3,15 +3,16 @@ import { colors } from "../../../../styles/theme";
 
 export const StyledModal = styled.div`
   width: 365px;
-  height: 350px;
+  // height: 100%;
   background-color: white;
   z-index: 199;
   top: 30%;
   margin-left: auto;
   position: fixed;
-  color: white;
+  color: ${colors.primary};
   display: ${(props) => (props.visible ? `` : "none")};
   border-radius: 14px;
+  padding: 15px;
 `;
 
 export const StyledBackdrop = styled.div`

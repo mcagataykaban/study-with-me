@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useModal from "../../../hooks/useModal";
-import i18n from "../../../i18n";
-import { changeLang } from "../../../helpers/changeLang";
-import { Nav, MenuItem, Wrapper } from "./styles";
+import { Nav, MenuItem, Wrapper, NameArea } from "./styles";
 import {
   Modal,
   FlexBox,
@@ -12,18 +10,30 @@ import {
   HamburgerButton,
   SideDrawer,
   Breadcrumb,
+  LoginForm,
+  LocaleSelector,
 } from "../..";
+import { useAuth } from "../../../context/authContext";
+import { Popover } from "react-tiny-popover";
 
 const Navbar = ({ logo, breadCrumbText }) => {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const { t, i18 } = useTranslation();
+  const { loggedIn, userInfo, logout } = useAuth();
   const [isOpenDrawer, setIsOpenDrawer] = useState(false);
   const { isModalVisible, showModal, handleOk, handleCancel } = useModal();
   return (
     <>
-      <Modal handleCancel={handleCancel} visible={isModalVisible}>
-        sad
+      <Modal
+        haveLocaleSelector
+        title={t("login")}
+        handleCancel={handleCancel}
+        visible={isModalVisible}
+      >
+        <LoginForm handleCancel={handleCancel} />
       </Modal>
       <SideDrawer
+        showModal={showModal}
         isOpenDrawer={isOpenDrawer}
         setIsOpenDrawer={setIsOpenDrawer}
         isOpen={isOpenDrawer}
@@ -39,20 +49,7 @@ const Navbar = ({ logo, breadCrumbText }) => {
           }}
         />
         <Wrapper>
-          <FlexBox style={{ marginRight: 20 }}>
-            <Button
-              selected={i18n.language === "tr" ? true : false}
-              onClick={changeLang("tr")}
-            >
-              TR
-            </Button>
-            <Button
-              selected={i18n.language === "en" ? true : false}
-              onClick={changeLang("en")}
-            >
-              EN
-            </Button>
-          </FlexBox>
+          <LocaleSelector />
           <FlexBox style={{ marginRight: 20 }}>
             <Link to="/">
               <MenuItem>{t("home")}</MenuItem>
@@ -60,7 +57,28 @@ const Navbar = ({ logo, breadCrumbText }) => {
             <Link to="/Contact">
               <MenuItem>{t("contact")}</MenuItem>
             </Link>
-            <Button onClick={showModal}>{t("login")}</Button>
+            {!loggedIn ? (
+              <Button onClick={showModal}>{t("login")}</Button>
+            ) : (
+              <Popover
+                onClickOutside={() => setIsPopoverOpen(false)}
+                isOpen={isPopoverOpen}
+                positions={["bottom", "left", "right"]}
+                content={
+                  <div>
+                    <NameArea>{userInfo?.email}</NameArea>
+                    <Button onClick={logout}>{t("logout")}</Button>
+                  </div>
+                }
+              >
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                >
+                  <NameArea>{userInfo?.name}</NameArea>
+                </div>
+              </Popover>
+            )}
           </FlexBox>
         </Wrapper>
       </Nav>
