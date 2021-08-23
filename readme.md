@@ -11,3 +11,7 @@ popover -> react-tiny-popover
 icons > fontawesome
 localization -> react-i18next i18next
 
+
+* if you get an error about cross-env use this command.
+* npm i cross-env
+
